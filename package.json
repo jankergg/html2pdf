@@ -1,0 +1,19 @@
+{
+  "name": "html2pdf",
+  "version": "1.0.0",
+  "description": "trans html to pdf using puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "html2pdf",
+    "puppeteer"
+  ],
+  "author": "janko zhang",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "puppeteer": "^2.0.0"
+  }
+}

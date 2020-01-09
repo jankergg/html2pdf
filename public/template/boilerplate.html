@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="threme-color" content="#000000" />
+    <title>Cover Letter</title>
+    <link rel="stylesheet" href="../assets/style/main.css" />
+  </head>
+  <body>
+    <div class="wrapper" id="wrapper">
+      <div class="letter">
+        <div class="letter-head">
+          <h1 class="letter-head_name"><span contenteditable="true" id="user_name">JIANQIANG ZHANG</span></h1>
+          <p class="letter-head_position" contenteditable="true" id="job_title">Full Stack Developer</p>
+          <p class="letter-head_description" contenteditable="true" id="user_summary">
+            Resourcefull Developer, very familiar with JavaScript, CSS, HTML, also have years of experience with JAVA
+            and PHP development. Enjoy problem solving and creating reliable and maintainable webapp.
+          </p>
+        </div>
+        <div class="letter-body">
+          <div class="letter-body_sidebar">
+            <h2>CONTACT</h2>
+            <dl>
+              <dt>Address</dt>
+              <dd contenteditable="true" id="address">Agnes Street, <br />New Westminster, BC</dd>
+              <dt>Phone</dt>
+              <dd contenteditable="true" id="phone">778-798-1040</dd>
+              <dt>Email</dt>
+              <dd contenteditable="true" id="email">jankergg@gmail.com</dd>
+            </dl>
+          </div>
+          <div class="letter-body_main">
+            <div class="letter-body_date">Jan 8, 2020</div>
+            <div class="letter-body_receiver" contenteditable="true" id="receiver">Dear Hiring Manager,</div>
+            <p contenteditable="true" id="content">
+              Dear Officer, I read with interest your posting for [front-end developer] on www.chineseinla.com. I
+              believe I possess the necessary skills and experience you are seeking and would make a valuable addition
+              to those companies.
+              <br />
+              <br />
+              As my resume indicates, I possess more than 9 years of progressive experience in the frond-end field. My
+              professional history includes positions such as Senior Frond-End Developer at ShangHai Zhongan Insurance
+              Co,LTD. as well as Senior Frond-End Engineer at Beijing Wangluo World Life Technology Co., Ltd.
+              <br />
+              <br />
+              Most recently, my responsibilities as Senior Frond-End Developer at ShangHai Shanghai Zhongan Insurance
+              Co,LTD. match the qualifications you are seeking. As a Senior Frond-End Developer , my responsibilities
+              included build frond-end work flow and worked on front-end development best practice. I have developed
+              several webapps mainly by myself. My programs mostly developed in framework like Angular4/Vuejs/Reactjs,
+              as well as some REST API written in PHP/JAVA .
+              <br />
+              <br />
+              I have attached my resume for your review and I look forward to speaking with you further regarding your
+              available position. Sincerely, Janko Zhang.
+            </p>
+            <div class="letter-body_sign" contenteditable="true">Sincerely, <br />Jianqiang Zhang</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btns">
+      <button class="btn save" onclick="onSave()">Save</button>
+      <button class="btn download" onclick="onDownload()">Download</button>
+    </div>
+    <script language="javascript">
+      let tmp = '';
+      let pending = false
+      function onSave(){
+        if(pending) {return}
+        fetch('/pdf/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({data: document.getElementById('wrapper').innerHTML}),
+        }).then((data)=>{
+          pending = false
+          return data.json();
+        }).then(({data})=>{
+          tmp = data;
+        })
+        .catch((e)=>{
+          console.log(e);
+          pending = false
+        })
+      }
+      function onDownload(){
+        fetch('/pdf/gen', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({data: tmp}),
+        }).then((rawdata)=>{
+          return rawdata.json();
+        }).then(({data,msg})=>{
+          window.open(`/download/${data}`)
+        })
+      }
+    </script>
+  </body>
+  </html>
