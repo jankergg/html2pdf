@@ -93,6 +93,8 @@ h6 {
 	width: 50%;
 	background: #f3987d;
 	color: #464e61;
+	font-weight: bold;
+	text-transform: uppercase;
 	font-size: 1.5rem;
 }
 .letter-head_description {
@@ -212,11 +214,19 @@ h6 {
 	border: 1px solid #464e61;
 	outline: none;
 }
-.btns {
+.options{
 	position: absolute;
 	box-sizing: border-box;
 	right: 0;
 	top: 0;
+}
+.options .variables{
+	padding-top: 4rem;
+}
+.options .variables input{
+	display: block;
+	margin-bottom:1rem;
+	height:2rem;
 }
 .btn {
 	background: #464e61;
