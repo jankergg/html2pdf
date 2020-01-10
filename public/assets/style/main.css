@@ -13,6 +13,7 @@ body {
 	height: 100%;
 	display: block;
 	font-size: 14px;
+	font-family: "Times New Roman";
 }
 h1 {
 	font-size: 2rem;
@@ -64,7 +65,7 @@ h6 {
 	font-size: 0;
 	height: 100%;
 	max-width: 1024px;
-	margin:0 auto;
+	margin: 0 auto;
 }
 .letter-head {
 	background: #f3987d;
@@ -208,26 +209,26 @@ h6 {
 	border: 1px solid #464e61;
 	outline: none;
 }
-.btns{
+.btns {
 	position: absolute;
 	box-sizing: border-box;
-	right:0;
-	top:0;
+	right: 0;
+	top: 0;
 }
 .btn {
 	background: #464e61;
 	color: #fff;
-	border:0;
+	border: 0;
 	height: 3rem;
-	width:5rem;
+	width: 5rem;
 	display: inline-block;
 	line-height: 3rem;
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	text-align: center;
 }
 .btn:active {
-	border:0;
+	border: 0;
 	background: #464e61;
 	color: #464e61;
 }
@@ -236,6 +237,6 @@ h6 {
 	color: #fee2c8;
 }
 .btn.download {
-	margin-left:2rem;
+	margin-left: 2rem;
 	background: #f3987d;
 }
