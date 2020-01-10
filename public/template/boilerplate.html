@@ -6,21 +6,13 @@
     <meta name="threme-color" content="#000000" />
     <title>Cover Letter</title>
     <link rel="stylesheet" href="../assets/style/main.css" />
-    <script>
-      function updateName(e) {
-        if(!e){return}
-        const name = e.target.innerText;
-        let userName = document.querySelectorAll('.user-name');
-        userName.forEach(n => (n.innerText = name));
-      }
-    </script>
   </head>
   <body>
     <div class="wrapper" id="wrapper">
       <div class="letter">
         <div class="letter-head">
           <h1 class="letter-head_name">
-            <span contenteditable="true" id="user_name" onblur="updateName(event)">JIANQIANG ZHANG</span>
+            <span contenteditable="true" id="user_name" onblur="boilerPlate.updateName(event)">${YourName}</span>
           </h1>
           <p class="letter-head_position" contenteditable="true" id="job_title">${JobTitle}</p>
           <p class="letter-head_description" contenteditable="true" id="user_summary">
@@ -48,8 +40,8 @@
             </div>
             <div class="letter-body_receiver" contenteditable="true" id="receiver">Dear Hiring Manager,</div>
             <p contenteditable="true" id="content">
-              Dear Officer, I read with interest your posting for [${JobTitle}] on [${JobSource}]. I believe I possess the
-              necessary skills and experience you are seeking and would make a valuable addition to those companies.
+              Dear Officer, I read with interest your posting for [${JobTitle}] on [${JobSource}]. I believe I possess
+              the necessary skills and experience you are seeking and would make a valuable addition to those companies.
               <br />
               <br />
               As my resume indicates, I possess more than 9 years of progressive experience in the frond-end field. My
@@ -69,10 +61,8 @@
             </p>
             <div class="letter-body_sign">
               Sincerely, <br />
-              <span class="user-name">
-                <script>
-                  document.write(document.getElementById('user_name').innerText.toLowerCase());
-                </script>
+              <span class="user-name" contenteditable="true">
+                ${YourName}
               </span>
             </div>
           </div>
@@ -80,103 +70,20 @@
       </div>
     </div>
     <div class="options">
-      <button class="btn save" onclick="onSave()">Save</button>
-      <button class="btn download" onclick="onDownload()">Download</button>
+      <button class="btn save" onclick="boilerPlate.onSave()">Save</button>
+      <button class="btn download" onclick="boilerPlate.onDownload()">Download</button>
 
       <div class="variables">
         <h2>Variables</h2>
+        <label for="YourName">Your Name</label>
+        <input type="text" id="YourName" placeholder="Janko Zhang" onchange="boilerPlate.updateVar(event)" />
         <label for="JobTitle">Job Title</label>
-        <input type="text" id="JobTitle" placeholder="Full Stack Developer" onchange="updateVar(event)" />
+        <input type="text" id="JobTitle" placeholder="Full Stack Developer" onchange="boilerPlate.updateVar(event)" />
         <label for="JobSource">Job Source</label>
-        <input type="text" id="JobSource" placeholder="www.Indeed.com" onchange="updateVar(event)" />
+        <input type="text" id="JobSource" placeholder="www.Indeed.com" onchange="boilerPlate.updateVar(event)" />
         <button class="btn" onclick="window.location.reload()">Reset</button>
       </div>
-
     </div>
-    <script language="javascript">
-      let tmp = '';
-      let pending = false;
-      const variables = {};
-      let allFeilds = null;
-      const blurEvent = new Event('blur');
-
-      function onSave() {
-        if (pending) {
-          return;
-        }
-        fetch('/pdf/update', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ data: document.getElementById('wrapper').innerHTML })
-        })
-          .then(data => {
-            pending = false;
-            return data.json();
-          })
-          .then(({ data }) => {
-            tmp = data;
-          })
-          .catch(e => {
-            console.log(e);
-            pending = false;
-          });
-      }
-      function onDownload() {
-        fetch('/pdf/gen', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ data: tmp })
-        })
-          .then(rawdata => {
-            return rawdata.json();
-          })
-          .then(({ data, msg }) => {
-            window.open(`/download/${data}`);
-          });
-      }
-      function $(id){return document.getElementById(id)}
-      function $c(id){return document.querySelectorAll(id)}
-
-      function updateVar(e){
-        const id = e.target.id.toLowerCase();
-        const value = e.target.value;
-        variables[id]  = value;
-        triggerUpdate();
-      }
-
-      function deVar(str, v){
-        const scp = this;
-        return str.replace(/\${(\w+)}/gi,function(s){
-         const name = s.replace(/\${(\w+)}/,'$1').toLowerCase();
-         if(scp[name]){return scp[name]}
-          return s;
-       })
-      };
-
-      function bindAll(){
-        allFeilds = document.querySelectorAll('[contenteditable="true"]');
-        const handler = e => {
-          const text = e.target.innerText;
-          if(text.indexOf('${')>-1){
-            e.target.innerText = deVar.call(variables, text);
-          }
-        }
-        allFeilds.forEach(e => {
-          e.addEventListener('blur', handler, false)
-        })
-      }
-      bindAll();
-
-      function triggerUpdate(){
-         allFeilds.forEach(e => {
-          e.dispatchEvent(blurEvent)
-        });
-      }
-
-    </script>
+    <script src="../assets/js/scripts.js" onload="window.boilerPlate = new BoilerPlate();"></script>
   </body>
 </html>
